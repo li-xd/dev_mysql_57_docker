@@ -64,7 +64,9 @@ RUN { \
 		| xargs -0 grep -lZE '^(bind-address|log)' \
 		| xargs -rt -0 sed -Ei 's/^(bind-address|log)/#&/' \
 # don't reverse lookup hostnames, they are usually another container
-	&& echo "[mysqld]\nskip-host-cache\nskip-name-resolve\nsql_mode='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'" > /etc/mysql/conf.d/docker.cnf
+		&& echo '[mysqld]\nskip-host-cache\nskip-name-resolve\n' > /etc/mysql/conf.d/docker.cnf
+
+RUN echo "sql_mode='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'" > /etc/mysql/conf.d/docker.cnf
 
 VOLUME /var/lib/mysql
 
